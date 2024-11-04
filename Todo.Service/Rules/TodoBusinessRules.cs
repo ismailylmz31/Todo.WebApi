@@ -9,9 +9,14 @@ using Todo.Service.Constant;
 
 namespace Todo.Service.Rules
 {
-    public class TodoBusinessRules(ITodoRepository _todoRepository)
+    public class TodoBusinessRules
     {
+        private readonly ITodoRepository _todoRepository;
 
+        public TodoBusinessRules(ITodoRepository todoRepository)
+        {
+            _todoRepository = todoRepository;
+        }
 
         public virtual bool TodoIsPresent(Guid id)
         {
@@ -22,9 +27,6 @@ namespace Todo.Service.Rules
             }
 
             return true;
-
-
-
         }
     }
 
