@@ -9,9 +9,9 @@ using Todo.Models.Todos;
 
 namespace Todo.Service.Mappings
 {
-    public class MappingProfiles : Profile
+    public class TodoProfile : Profile
     {
-        public MappingProfiles()
+        public TodoProfile()
         {
             CreateMap<CreateTodoRequestDto, Todo.Models.Entities.Todo>();
             CreateMap<Todo.Models.Entities.Todo, TodoResponseDto>();

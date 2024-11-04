@@ -12,6 +12,7 @@ namespace Todo.Service
     {
         public static IServiceCollection AddServiceDependenies(this IServiceCollection services)
         {
+            services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ITodoService, TodoService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
