@@ -7,6 +7,7 @@ using Todo.Service.Abstract;
 
 namespace Todo.WebApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class TodoController(ITodoService _todoService) : ControllerBase
@@ -111,5 +112,16 @@ namespace Todo.WebApi.Controllers
             var result = _todoService.GetUserTodos();
             return Ok(result);
         }
+
+
+
+        [HttpGet("filter")]
+        public IActionResult GetUserTodosByCompletionStatus([FromQuery] bool completed)
+        {
+            var result = _todoService.GetUserTodosByCompletionStatus(completed);
+            return Ok(result);
+        }
+
+
     }
 }

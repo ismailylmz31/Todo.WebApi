@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using Todo.Core.Tokens.Configuration;
 using Todo.Models.Entities;
 using Todo.Repository;
@@ -54,6 +56,26 @@ builder.Services.AddAuthentication(opt =>
         IssuerSigningKey = SecurityKeyHelper.GetSecurityKey(tokenOption.SecurityKey)
     };
 });
+
+
+//builder.Services.AddAuthentication(options =>
+//{
+//    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+//    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+//})
+//.AddJwtBearer(options =>
+//{
+//    options.TokenValidationParameters = new TokenValidationParameters
+//    {
+//        ValidateIssuer = true,
+//        ValidateAudience = true,
+//        ValidateLifetime = true,
+//        ValidateIssuerSigningKey = true,
+//        ValidIssuer = tokenOptions.Issuer,
+//        ValidAudience = tokenOptions.Audience[0],
+//        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenOptions.SecurityKey))
+//    };
+//});
 
 
 

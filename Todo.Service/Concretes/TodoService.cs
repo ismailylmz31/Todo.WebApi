@@ -255,5 +255,34 @@ namespace Todo.Service.Concretes
                 Message = $"User ID {userId} için yapılacak işler listelendi."
             };
         }
+
+
+
+        public ReturnModel<List<TodoResponseDto>> GetUserTodosByCompletionStatus(bool completed)
+        {
+            // Token’dan userId’yi doğrudan serviste alıyoruz
+            var userId = _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userId))
+            {
+                return new ReturnModel<List<TodoResponseDto>>
+                {
+                    Success = false,
+                    Status = 401,
+                    Message = "Kullanıcı kimliği bulunamadı."
+                };
+            }
+
+            // Kullanıcı kimliğine ve tamamlanma durumuna göre yapılacak işleri filtreliyoruz
+            var todos = _todoRepository.GetAll(todo => todo.UserId == userId && todo.Completed == completed);
+            var response = _mapper.Map<List<TodoResponseDto>>(todos);
+
+            return new ReturnModel<List<TodoResponseDto>>
+            {
+                Data = response,
+                Success = true,
+                Status = 200,
+                Message = $"User ID {userId} için {(completed ? "tamamlanmış" : "tamamlanmamış")} işler listelendi."
+            };
+        }
     }
 }

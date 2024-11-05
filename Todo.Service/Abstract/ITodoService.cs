@@ -29,5 +29,7 @@ namespace Todo.Service.Abstract
         Task<ReturnModel<List<TodoResponseDto>>> GetTodosByPriority(Priority priority);
         //ReturnModel<List<TodoResponseDto>> GetUserTodos(string userId);
         ReturnModel<List<TodoResponseDto>> GetUserTodos();
+
+        ReturnModel<List<TodoResponseDto>> GetUserTodosByCompletionStatus(bool completed);
     }
 }
