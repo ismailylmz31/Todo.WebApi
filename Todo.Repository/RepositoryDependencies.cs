@@ -17,6 +17,7 @@ namespace Todo.Repository
 
         public static IServiceCollection AddRepositoryDepencdencies(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddScoped<IUserRepository, EfUserRepository>();
             services.AddScoped<ICategoryRepository, EfCategoryRepository>();
             services.AddScoped<ITodoRepository, EfTodoRepository>();
             services.AddDbContext<BaseDbContext>(opt => opt.UseSqlServer(configuration.GetConnectionString("SqlConnection")));
