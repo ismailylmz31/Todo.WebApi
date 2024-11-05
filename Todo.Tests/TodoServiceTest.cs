@@ -38,7 +38,7 @@ namespace Todo.Tests
         public async Task Add_ShouldReturnSuccess_WhenTodoIsAdded()
         {
             // Arrange
-            var dto = new CreateTodoRequestDto("Test Todo", "Test Description", 1);
+            var dto = new CreateTodoRequestDto("Test Todo", "Test Description", 1, "asd");
             var userId = "test-user-id";
             var todoEntity = new Todo.Models.Entities.Todo { Id = Guid.NewGuid(), Title = dto.Title, Description = dto.Description, UserId = userId };
             var todoResponse = new TodoResponseDto { id = todoEntity.Id, Title = todoEntity.Title, Description = todoEntity.Description };

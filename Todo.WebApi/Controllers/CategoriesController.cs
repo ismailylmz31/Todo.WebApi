@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Todo.Models.Categories;
 using Todo.Service.Abstract;
 
@@ -11,7 +12,6 @@ namespace Todo.WebApi.Controllers
     {
 
         [HttpPost("add")]
-
         public IActionResult Add([FromBody] CategoryAddRequestDto dto)
         {
             var result = _categoryService.Add(dto);
