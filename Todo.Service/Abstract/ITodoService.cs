@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Todo.Core.Entities;
+using Todo.Models.Entities;
 using Todo.Models.Todos;
 
 namespace Todo.Service.Abstract
@@ -22,5 +23,9 @@ namespace Todo.Service.Abstract
         ReturnModel<List<TodoResponseDto>> GetAllByAuthorId(string authorId);
 
         ReturnModel<List<TodoResponseDto>> GetAllByTitleContains(string text);
+
+        Task<ReturnModel<List<TodoResponseDto>>> GetCompletedTodos();
+        Task<ReturnModel<List<TodoResponseDto>>> GetOverdueTodos();
+        Task<ReturnModel<List<TodoResponseDto>>> GetTodosByPriority(Priority priority);
     }
 }

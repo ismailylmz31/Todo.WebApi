@@ -17,7 +17,7 @@ namespace Todo.Core.Entities
 
         public int Status { get; set; }
 
-
+        public List<string> Errors { get; set; }
 
     }
 }

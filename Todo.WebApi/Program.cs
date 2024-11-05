@@ -26,7 +26,7 @@ builder.Services.AddIdentity<User, IdentityRole>(opt =>
 }).AddEntityFrameworkStores<BaseDbContext>();
 
 
-builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+
 
 
 
@@ -66,7 +66,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseExceptionHandler(_ => { });
+app.UseExceptionHandler("/error");
+app.UseMiddleware<GlobalExceptionHandler>();
+
 app.UseHttpsRedirection();
 
 app.UseAuthentication();

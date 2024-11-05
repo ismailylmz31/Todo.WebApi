@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Todo.Core.Entities;
 using Todo.Core.ExceptionHandler;
+using Todo.Models.Entities;
 using Todo.Models.Todos;
 using Todo.Repository.Repository.Abstract;
 using Todo.Service.Abstract;
@@ -170,6 +171,46 @@ namespace Todo.Service.Concretes
                 Success = true
             };
 
+        }
+
+
+        public async Task<ReturnModel<List<TodoResponseDto>>> GetCompletedTodos()
+        {
+            var todos = await _todoRepository.GetCompletedTodos();
+            var response = _mapper.Map<List<TodoResponseDto>>(todos);
+            return new ReturnModel<List<TodoResponseDto>>
+            {
+                Data = response,
+                Message = "Tamamlanmış todos listelendi",
+                Status = 200,
+                Success = true
+            };
+        }
+
+        public async Task<ReturnModel<List<TodoResponseDto>>> GetOverdueTodos()
+        {
+            var todos = await _todoRepository.GetOverdueTodos();
+            var response = _mapper.Map<List<TodoResponseDto>>(todos);
+            return new ReturnModel<List<TodoResponseDto>>
+            {
+                Data = response,
+                Message = "Süresi geçmiş todos listelendi",
+                Status = 200,
+                Success = true
+            };
+        }
+
+        public async Task<ReturnModel<List<TodoResponseDto>>> GetTodosByPriority(Priority priority)
+        {
+            var todos = await _todoRepository.GetTodosByPriority(priority);
+            var response = _mapper.Map<List<TodoResponseDto>>(todos);
+            return new ReturnModel<List<TodoResponseDto>>
+            {
+                Data = response,
+                Message = $"Öncelik seviyesi '{priority}' olan todos listelendi",
+                Status = 200,
+                Success = true
+            };
         }
     }
 }

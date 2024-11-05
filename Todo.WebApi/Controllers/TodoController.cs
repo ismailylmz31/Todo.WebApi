@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using Todo.Models.Entities;
 using Todo.Models.Todos;
 using Todo.Service.Abstract;
 
@@ -65,5 +66,27 @@ namespace Todo.WebApi.Controllers
             var result = _todoService.GetAllByTitleContains(text);
             return Ok(result);
         }
+
+        [HttpGet("completed")]
+        public async Task<IActionResult> GetCompletedTodos()
+        {
+            var result = await _todoService.GetCompletedTodos();
+            return Ok(result);
+        }
+
+        [HttpGet("overdue")]
+        public async Task<IActionResult> GetOverdueTodos()
+        {
+            var result = await _todoService.GetOverdueTodos();
+            return Ok(result);
+        }
+
+        [HttpGet("priority")]
+        public async Task<IActionResult> GetTodosByPriority([FromQuery] Priority priority)
+        {
+            var result = await _todoService.GetTodosByPriority(priority);
+            return Ok(result);
+        }
+
     }
 }
