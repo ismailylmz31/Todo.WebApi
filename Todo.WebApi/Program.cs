@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Todo.Core.Tokens.Configuration;
 using Todo.Models.Entities;
 using Todo.Repository;
