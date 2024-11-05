@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Todo.Core.Entities;
@@ -21,14 +23,15 @@ namespace Todo.Service.Concretes
         private readonly ITodoRepository _todoRepository;
         private readonly IMapper _mapper;
         private readonly TodoBusinessRules _businessRules;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
 
-        public TodoService(ITodoRepository todoRepository, IMapper mapper, TodoBusinessRules businessRules)
+        public TodoService(ITodoRepository todoRepository, IMapper mapper, TodoBusinessRules businessRules, IHttpContextAccessor httpContextAccessor)
         {
             _todoRepository = todoRepository;
             _mapper = mapper;
             _businessRules = businessRules;
-
+            _httpContextAccessor = httpContextAccessor;
         }
 
 
@@ -210,6 +213,46 @@ namespace Todo.Service.Concretes
                 Message = $"Öncelik seviyesi '{priority}' olan todos listelendi",
                 Status = 200,
                 Success = true
+            };
+        }
+        //// Kullanıcıya ait yapılacak işleri filtreleyen metot
+        //public ReturnModel<List<TodoResponseDto>> GetUserTodos(string userId)
+        //{
+        //    var todos = _todoRepository.GetAll(todo => todo.UserId == userId); // Kullanıcı kimliğine göre filtreleme
+        //    var response = _mapper.Map<List<TodoResponseDto>>(todos);
+
+        //    return new ReturnModel<List<TodoResponseDto>>
+        //    {
+        //        Data = response,
+        //        Success = true,
+        //        Status = 200,
+        //        Message = $"User ID {userId} için yapılacak işler listelendi."
+        //    };
+        //}
+        public ReturnModel<List<TodoResponseDto>> GetUserTodos()
+        {
+            // Token’dan userId’yi doğrudan serviste alıyoruz
+            var userId = _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userId))
+            {
+                return new ReturnModel<List<TodoResponseDto>>
+                {
+                    Success = false,
+                    Status = 401,
+                    Message = "Kullanıcı kimliği bulunamadı."
+                };
+            }
+
+            // Kullanıcı kimliğine göre yapılacak işleri filtreliyoruz
+            var todos = _todoRepository.GetAll(todo => todo.UserId == userId);
+            var response = _mapper.Map<List<TodoResponseDto>>(todos);
+
+            return new ReturnModel<List<TodoResponseDto>>
+            {
+                Data = response,
+                Success = true,
+                Status = 200,
+                Message = $"User ID {userId} için yapılacak işler listelendi."
             };
         }
     }

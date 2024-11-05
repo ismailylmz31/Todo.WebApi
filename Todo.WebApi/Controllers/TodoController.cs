@@ -88,5 +88,28 @@ namespace Todo.WebApi.Controllers
             return Ok(result);
         }
 
+        //// authorize property kullanmadan yapılan deneme işlemi
+        //// Kullanıcının yapılacak işlerini döndüren endpoint
+        //[HttpGet("mytodos")]
+        //public IActionResult GetUserTodos()
+        //{
+        //    // JWT token üzerinden kullanıcının ID'sini alıyoruz
+        //    var userId = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+        //    if (userId == null)
+        //    {
+        //        return Unauthorized(new { message = "Kullanıcı kimliği bulunamadı." });
+        //    }
+
+        //    // Kullanıcı kimliğine göre yapılacak işleri alıyoruz
+        //    var result = _todoService.GetUserTodos(userId);
+
+        //    return Ok(result);
+        //}
+        [HttpGet("mytodos")]
+        public IActionResult GetUserTodos()
+        {
+            var result = _todoService.GetUserTodos();
+            return Ok(result);
+        }
     }
 }
