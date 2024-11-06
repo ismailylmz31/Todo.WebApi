@@ -7,7 +7,7 @@ using Todo.Service.Abstract;
 
 namespace Todo.WebApi.Controllers
 {
-    [Authorize]
+    
     [Route("api/[controller]")]
     [ApiController]
     public class TodoController(ITodoService _todoService) : ControllerBase

@@ -5,19 +5,19 @@ using Todo.Service.Abstract;
 
 namespace Todo.WebApi.Controllers
 {
-
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CategoriesController(ICategoryService _categoryService) : ControllerBase
     {
-
+        
         [HttpPost("add")]
         public IActionResult Add([FromBody] CategoryAddRequestDto dto)
         {
             var result = _categoryService.Add(dto);
             return Ok(result);
         }
-
+        [Authorize(Roles = "User")]
         [HttpGet("getall")]
         public IActionResult GetAll()
         {
@@ -26,7 +26,7 @@ namespace Todo.WebApi.Controllers
             return Ok(result);
         }
 
-
+        [Authorize(Roles = "User")]
         [HttpGet("getbyid/{id:int}")]
         public IActionResult GetById([FromRoute] int id)
         {

@@ -17,7 +17,7 @@ namespace Todo.Service
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IJwtService, JwtService>();
-            
+            services.AddScoped<IRolesService, RolesService>();
             services.AddScoped<TodoBusinessRules>();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddFluentValidationAutoValidation();

@@ -29,7 +29,15 @@ namespace Todo.Repository.Context
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
-
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlServer("SqlConnection", options =>
+        //        options.EnableRetryOnFailure(
+        //            maxRetryCount: 5, // Yeniden deneme sayısı
+        //            maxRetryDelay: TimeSpan.FromSeconds(10), // Denemeler arasındaki bekleme süresi
+        //            errorNumbersToAdd: null // Özel hata numaraları yoksa null bırakabilirsiniz
+        //        ));
+        //}
 
         public DbSet<Todo.Models.Entities.Todo> todos { get; set; }  
 
